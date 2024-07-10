@@ -35,8 +35,8 @@ runs:
       shell: bash
       run: |
         if [ "${{ inputs.labels }}" ]; then
-          export labels=$(for label in "${{ inputs.labels }}"; do
-            echo -n "--label=${label}"
+          export labels=$(for label in ${{ inputs.labels }}; do
+            echo -n "--label=${label} "
           done)
         fi
         if [ "${{ inputs.tags }}" ]; then
