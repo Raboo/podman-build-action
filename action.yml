@@ -52,6 +52,6 @@ runs:
 
         echo "podman build -t ${firstTag} ${file} ${platforms} ${labels} --format ${{ inputs.format }} ${{ inputs.context }}"
         podman build -t ${firstTag} ${file} ${platforms} "${labels}" --format ${{ inputs.format }} ${{ inputs.context }}
-        [[ "${otherTags}" ]] && echo "podman tag ${firstTag} ${otherTags}"
-        [[ "${otherTags}" ]] && podman tag ${firstTag} ${otherTags}
+        [[ ! "${otherTags}" ]] || echo "podman tag ${firstTag} ${otherTags}"
+        [[ ! "${otherTags}" ]] || podman tag ${firstTag} ${otherTags}
 
