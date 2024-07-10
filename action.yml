@@ -36,7 +36,7 @@ runs:
       run: |
         if [ "${{ inputs.labels }}" ]; then
           export labels=$(for label in "${{ inputs.labels }}"; do
-            echo -n "labels=${label}"
+            echo -n "--labels=${label}"
           done)
         fi
         if [ "${{ inputs.tags }}" ]; then
@@ -49,6 +49,6 @@ runs:
         if [ "${{ inputs.platforms }}" ]; then
           platforms="--platform ${{ inputs.platforms }}"
         fi
-        podman build -t ${firstTag} ${file} ${platforms} $labels --format $${{ inputs.format }} ${{ inputs.context }}
+        podman build -t ${firstTag} ${file} ${platforms} ${labels} --format $${{ inputs.format }} ${{ inputs.context }}
         podman tag ${firstTag} ${otherTags}
 
