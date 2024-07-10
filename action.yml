@@ -47,7 +47,7 @@ runs:
           file="-f ${{ inputs.file }}"
         fi
         if [ "${{ inputs.platforms }}" ]; then
-          platforms="-p ${{ inputs.platforms }}"
+          platforms="--platform ${{ inputs.platforms }}"
         fi
         podman build -t ${firstTag} ${file} ${platforms} $labels --format $${{ inputs.format }} ${{ inputs.context }}
         podman tag ${firstTag} ${otherTags}
