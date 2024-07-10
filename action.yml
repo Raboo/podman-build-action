@@ -50,8 +50,8 @@ runs:
           platforms="--platform ${{ inputs.platforms }}"
         fi
 
-        echo "podman build -t ${firstTag} ${file} ${platforms} ${labels} --format $${{ inputs.format }} ${{ inputs.context }}"
-        podman build -t ${firstTag} ${file} ${platforms} ${labels} --format $${{ inputs.format }} ${{ inputs.context }}
+        echo "podman build -t ${firstTag} ${file} ${platforms} ${labels} --format ${{ inputs.format }} ${{ inputs.context }}"
+        podman build -t ${firstTag} ${file} ${platforms} ${labels} --format ${{ inputs.format }} ${{ inputs.context }}
         echo "podman tag ${firstTag} ${otherTags}"
         podman tag ${firstTag} ${otherTags}
 
