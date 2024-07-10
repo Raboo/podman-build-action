@@ -2,7 +2,7 @@ name: 'podman build'
 description: 'Podman build action'
 
 branding:
-  icon: "upload-cloud"
+  icon: "box"
   color: "blue"
 
 inputs:
