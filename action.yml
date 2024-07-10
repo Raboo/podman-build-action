@@ -31,13 +31,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Build the image 
+    - name: Build the image
       shell: bash
       run: |
         if [ "${{ inputs.labels }}" ]; then
-          export labels=$(for label in ${{ inputs.labels }}; do
-            echo -n "--label=${label} "
-          done)
+          export labels=$(while read label; do
+            echo -n "--label=\"${label}\" "
+          done <<< "${{ inputs.labels }}")
         fi
         if [ "${{ inputs.tags }}" ]; then
           export firstTag=$(echo "${{ inputs.tags }}" | head -1)
