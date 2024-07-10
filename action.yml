@@ -36,7 +36,7 @@ runs:
       run: |
         if [ "${{ inputs.labels }}" ]; then
           export labels=$(while read label; do
-            echo -n "--label=\"${label}\" "
+            echo -n "--label='${label}' "
           done <<< "${{ inputs.labels }}")
         fi
         if [ "${{ inputs.tags }}" ]; then
