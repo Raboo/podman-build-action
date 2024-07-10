@@ -1,0 +1,50 @@
+name: 'podman build'
+description: 'Podman build action'
+
+branding:
+  icon: "upload-cloud"
+  color: "blue"
+
+inputs:
+  context:
+    description: "Context folder"
+    required: false 
+    default: "."
+  platforms:
+    description: "Container platforms"
+    required: false
+  file:
+    description: "Container file"
+    required: false
+    default: "null"
+  labels:
+    description: "image labels"
+    required: false
+  tags: 
+    description: "image tags" 
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Build the image 
+      shell: bash
+      run: |
+        if [ "${{ inputs.labels }}" ]; then
+          export labels=$(for label in "${{ inputs.labels }}"; do
+            echo -n "labels=${label}"
+          done)
+        fi
+        if [ "${{ inputs.tags }}" ]; then
+          export firstTag=$(echo "${{ inputs.tags }}" | head -1)
+          export otherTags=$(echo "${{ inputs.tags }}" | tail +2 | tr '\n' ' ')
+        fi
+        if [ "${{ inputs.file }}" != "null" ]; then
+          file="-f ${{ inputs.file }}"
+        fi
+        if [ "${{ inputs.platforms }}" ]; then
+          platforms="-p ${{ inputs.platforms }}"
+        fi
+        podman build -t ${firstTag} ${file} ${platforms} $labels ${{ inputs.context }}
+        podman tag ${firstTag} ${otherTags}
+
