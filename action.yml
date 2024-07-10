@@ -23,6 +23,10 @@ inputs:
   tags: 
     description: "image tags" 
     required: true
+  format:
+    description: "container format, docker or oci"
+    required: false
+    default: "oci"
 
 runs:
   using: "composite"
@@ -45,6 +49,6 @@ runs:
         if [ "${{ inputs.platforms }}" ]; then
           platforms="-p ${{ inputs.platforms }}"
         fi
-        podman build -t ${firstTag} ${file} ${platforms} $labels ${{ inputs.context }}
+        podman build -t ${firstTag} ${file} ${platforms} $labels --format $${{ inputs.format }} ${{ inputs.context }}
         podman tag ${firstTag} ${otherTags}
 
